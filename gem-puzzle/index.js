@@ -61,9 +61,11 @@ let t = 0;
 let moves=1;
 let zeroindex=0;
 let w=0;
+let mobile=0;
 function start(){
   do{
     if(windowInnerWidth>470){
+      mobile=0;
       document.querySelector(".puzzle_field").style.width='400px';
       document.querySelector(".puzzle_field").style.height='400px';
     if(max==9){
@@ -78,6 +80,7 @@ function start(){
     else{
       document.querySelector(".puzzle_field").style.width='300px';
       document.querySelector(".puzzle_field").style.height='300px';
+      mobile=1;
     if(max==9){
       w=100;  
     }
@@ -100,7 +103,6 @@ const cell = document.createElement("div");
 cell.className = "cell";
 cell.style.width=`${w}px`;
 cell.style.height=`${w}px`;
-console.log(typeof(w));
 n=getRandomInt(max);
 cell.innerHTML=n;
 cell.style.transition='all 0.15s ease-in-out';
@@ -152,18 +154,19 @@ let getLeft=empty.style.left;
 let getTop=empty.style.top;
 
 
+function getNumber(str){
+  return Number(str.slice(0, -2));  
+} 
+
 //Move
 function move(){
   const cells=document.querySelectorAll(".cell");
   let empty=cells[arr.indexOf(0)];
   let getLeft=empty.style.left;
   let getTop=empty.style.top;  
-function getNumber(str){
-    return Number(str.slice(0, -2));  
-} 
+
     for (let i = 0; i < cells.length; i++) {
         cells[i].addEventListener("click", function() {
-          playSound();
         cells[i].style.transition='all 0.15s ease-in-out';  
         empty=cells[zeroindex];
         getLeft=empty.style.left;
@@ -179,6 +182,7 @@ function getNumber(str){
         //[arr[arr.indexOf(0)], arr[arr.indexOf(Number(cells[i].textContent))]]  = [arr[arr.indexOf(Number(cells[i].textContent))], arr[arr.indexOf(0)]];
         //moveElement(arr,arr.indexOf(0),arr.indexOf(Number(cells[i].textContent)));
         swap(arr,arr.indexOf(0),arr.indexOf(Number(cells[i].textContent)));
+        playSound();
         win();
       }
   });
@@ -263,32 +267,40 @@ function checksolve(){
   }
 if((max%2==0 && ryad==2 && sum%2!=0) || (max%2==0 && ryad==1 && sum%2==0) || (max%2!=0 && sum%2==0))solvable=1;
 else solvable=0;
-console.log(solvable);
 }
 
 document.querySelector('.three').addEventListener("click",function(){
   max=9;
   document.querySelector(".puzzle_field").innerHTML='';
+  timer=0;moves=0;
+  document.querySelector('.moves').innerHTML=`Moves: ${moves++}`;
   start();
+  starttime();
   move();
 });
 document.querySelector('.four').addEventListener("click",function(){
   max=16;
   document.querySelector(".puzzle_field").innerHTML='';
+  timer=0;moves=0;
+  document.querySelector('.moves').innerHTML=`Moves: ${moves++}`;
   start();
+  starttime();
   move();
 });
 document.querySelector('.eight').addEventListener("click",function(){
   max=64;
   document.querySelector(".puzzle_field").innerHTML='';
+  timer=0;moves=0;
+  document.querySelector('.moves').innerHTML=`Moves: ${moves++}`;
   start();
+  starttime();
   move();
 });
 
 window.addEventListener(`resize`, event => {
   const cells=document.querySelectorAll(".cell");
   windowInnerWidth = document.documentElement.clientWidth;
-  if(windowInnerWidth<=470){
+  if(windowInnerWidth<=470 && mobile==0){
     document.querySelector(".puzzle_field").style.width='300px';
     document.querySelector(".puzzle_field").style.height='300px';
     if(max==9){
@@ -298,7 +310,7 @@ window.addEventListener(`resize`, event => {
       w=75;    
     }
     else if(max==64){
-      w=37,5;    
+      w=37.5;    
     }
     for(let i=0;i<max;i++){
       cells[i].style.width=`${w}px`;
@@ -306,11 +318,13 @@ window.addEventListener(`resize`, event => {
         if(i % max ** 0.5 == 0){l = 0}
         else{l += w;}
         t = Math.floor(i/max**0.5)*w;
-        cells[i].style.left=`${l}px`;
-        cells[i].style.top=`${t}px`;
-    }   
+        cells[i].style.left=`${getNumber(cells[i].style.left)*300/400}px`;
+        cells[i].style.top=`${getNumber(cells[i].style.top)*300/400}px`;
+    }
+    mobile = 1;   
   }
-  else{
+  else if(windowInnerWidth>470 & mobile==1){
+
     document.querySelector(".puzzle_field").style.width='400px';
     document.querySelector(".puzzle_field").style.height='400px';
     if(max==9){
@@ -328,12 +342,12 @@ window.addEventListener(`resize`, event => {
         if(i % max ** 0.5 == 0){l = 0}
         else{l += w;}
         t = Math.floor(i/max**0.5)*w;
-        cells[i].style.left=`${l}px`;
-        cells[i].style.top=`${t}px`;
-    }     
+        cells[i].style.left=`${getNumber(cells[i].style.left)*400/300}px`;
+        cells[i].style.top=`${getNumber(cells[i].style.top)*400/300}px`;
+    }mobile = 0;    
   }
   moves=0;
-  move(); }, false);
+   }, false);
 
 
   document.querySelector('.save').addEventListener("click",function(){
@@ -363,7 +377,6 @@ window.addEventListener(`resize`, event => {
       cell.className = "cell";
       cell.style.width=`${w}px`;
       cell.style.height=`${w}px`;
-      console.log(typeof(w));
       cell.innerHTML=arr[i];
       cell.style.transition='all 0.15s ease-in-out';
       cell.style.left=`${l}px`;
