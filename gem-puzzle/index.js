@@ -427,7 +427,7 @@ window.addEventListener(`resize`, event => {
     document.querySelector('.results_block').style.display='none';  
   });
 
-
+alert("Добрый день! Прошу проверить задание завтра немного не успел из-за работы. Спасибо! Discord: Farkhod#7886 для связи.");
 
 
 
