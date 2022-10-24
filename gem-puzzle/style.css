@@ -1,0 +1,83 @@
+@import url(https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700&display=swap);
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    font-family: Roboto;
+    list-style-type: none;
+  }
+  header,main,footer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  header{
+    height: 100px;
+  }
+  .container{
+    max-width: 1280px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    margin-top: 80px;
+  }
+  footer .container{
+    margin-top: 10px;
+  }
+  .puzzle_field{
+    position: relative;
+    width: 400px;
+    height: 400px;
+    background-color: #e9f2e9;
+    margin: 0 auto;
+    border: 4px solid #000;
+  }
+  .cell{
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border: 2px solid #000;
+    box-sizing: border-box;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .buttons_block{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 400px;
+    margin-top: 15px;
+  }
+  button{
+    background-color: #adeeafe8;
+    border: none;
+    color: #2a2828;
+    padding: 15px 15px;
+    text-align: center;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  .options_block{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 400px;
+  }
+  .sizes_block{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 400px;
+  }
+  @media (max-width: 470px) {
+    .buttons_block,.options_block,.sizes_block{
+      width: 320px;
+    }
+    
+  }
