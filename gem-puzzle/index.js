@@ -3,6 +3,13 @@ a=document.createElement(elem);
 a.className = elemclass;
 inelem.append(a);
 }
+addElement("div",'results_block',document.body);
+document.querySelector('.results_block').style.width='-webkit-fill-available';
+document.querySelector('.results_block').style.height='-webkit-fill-available';
+document.querySelector('.results_block').style.position='absolute';
+document.querySelector('.results_block').style.zIndex='1';
+document.querySelector('.results_block').style.backgroundColor='white';
+document.querySelector('.results_block').style.display='none';
 addElement("HEADER",'',document.body);
 addElement("div",'container',document.getElementsByTagName('header')[0]);
 addElement("div",'buttons_block',document.querySelector('.container'));
@@ -62,6 +69,12 @@ let moves=1;
 let zeroindex=0;
 let w=0;
 let mobile=0;
+if (localStorage.getItem('top10') !== null) {
+ top10=JSON.parse(localStorage.getItem("top10"));}
+else{
+ top10=[];
+}
+console.log(top10);
 function start(){
   do{
     if(windowInnerWidth>470){
@@ -240,7 +253,14 @@ function win(){
   let winarr=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,0];
   let winarr2=[1,2,3,4,5,6,7,8,0];
   let winarr3=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,0];
-  if((JSON.stringify(arr) === JSON.stringify(winarr)) || (JSON.stringify(arr) === JSON.stringify(winarr2)) || (JSON.stringify(arr) === JSON.stringify(winarr3)))alert(`Ура! Вы решили головоломку за ${minuteVal < 10 ? "0" + minuteVal.toString() : minuteVal} : ${secondVal < 10 ? "0" + secondVal.toString() : secondVal} и ${moves-1} ходов!`);
+  if((JSON.stringify(arr) === JSON.stringify(winarr)) || (JSON.stringify(arr) === JSON.stringify(winarr2)) || (JSON.stringify(arr) === JSON.stringify(winarr3))){
+    let win=[];
+    win[0]=moves-1;win[1]=`${minuteVal < 10 ? "0" + minuteVal.toString() : minuteVal} : ${secondVal < 10 ? "0" + secondVal.toString() : secondVal}`;
+    if (localStorage.getItem('top10') !== null) {
+    if(JSON.parse(localStorage.getItem("top10")[0][0]<win[0])){top10.push(win);}else{top10.unshift(win);}}
+    else{top10.push(win);}
+    localStorage.setItem('top10', JSON.stringify(top10));
+    alert(`Ура! Вы решили головоломку за ${minuteVal < 10 ? "0" + minuteVal.toString() : minuteVal} : ${secondVal < 10 ? "0" + secondVal.toString() : secondVal} и ${moves-1} ходов!`);}
 }
 
 function checksolve(){
@@ -399,7 +419,13 @@ window.addEventListener(`resize`, event => {
     document.querySelector('.sound').play();
   }
 
+  document.querySelector('.results').addEventListener("click",function(){
+    document.querySelector('.results_block').style.display='block';  
+  });
 
+  document.querySelector('.results_block').addEventListener("click",function(){
+    document.querySelector('.results_block').style.display='none';  
+  });
 
 
 
