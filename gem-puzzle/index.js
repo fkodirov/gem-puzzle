@@ -34,6 +34,8 @@ addElement("button",'four',document.querySelector('.sizes_block'));
 document.querySelector('.four').innerHTML='4x4';
 addElement("button",'eight',document.querySelector('.sizes_block'));
 document.querySelector('.eight').innerHTML='8x8';
+addElement("audio",'sound',document.querySelectorAll('.container')[2]);
+document.querySelector('.sound').src='button.m4a';
 function getRandomInt(max) {
     number=Math.floor(Math.random() * max)
     if(exc.includes(number)){getRandomInt(max);}
@@ -101,7 +103,7 @@ cell.style.height=`${w}px`;
 console.log(typeof(w));
 n=getRandomInt(max);
 cell.innerHTML=n;
-cell.style.transition='all 0.5s ease-in-out';
+cell.style.transition='all 0.15s ease-in-out';
 cell.style.left=`${l}px`;
 cell.style.top=`${t}px`;
 if(n==0){
@@ -161,10 +163,11 @@ function getNumber(str){
 } 
     for (let i = 0; i < cells.length; i++) {
         cells[i].addEventListener("click", function() {
-        cells[i].style.transition='all 0.5s ease-in-out';  
+          playSound();
+        cells[i].style.transition='all 0.15s ease-in-out';  
         empty=cells[zeroindex];
         getLeft=empty.style.left;
-        getTop=empty.style.top;console.log(getTop);console.log(getNumber(getTop));
+        getTop=empty.style.top;
         if((getLeft==cells[i].style.left && (getNumber(getTop)==getNumber(cells[i].style.top)-w || getNumber(getTop)==getNumber(cells[i].style.top)+w)) ||  (getTop==cells[i].style.top && (getNumber(getLeft)==getNumber(cells[i].style.left)-w || getNumber(getLeft)==getNumber(cells[i].style.left)+w))){
         const newemptyLeft=cells[i].style.left;
         const newemptyTop=cells[i].style.top;
@@ -362,7 +365,7 @@ window.addEventListener(`resize`, event => {
       cell.style.height=`${w}px`;
       console.log(typeof(w));
       cell.innerHTML=arr[i];
-      cell.style.transition='all 0.5s ease-in-out';
+      cell.style.transition='all 0.15s ease-in-out';
       cell.style.left=`${l}px`;
       cell.style.top=`${t}px`;
       if(arr[i]==0){
@@ -379,7 +382,9 @@ window.addEventListener(`resize`, event => {
   });
 
 
-
+  function playSound() {
+    document.querySelector('.sound').play();
+  }
 
 
 
