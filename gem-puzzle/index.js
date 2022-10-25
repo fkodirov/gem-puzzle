@@ -23,6 +23,8 @@ addElement("button",'results',document.querySelectorAll('.buttons_block')[0]);
 document.querySelector('.results').innerHTML='Results';
 addElement("button",'save',document.querySelectorAll('.buttons_block')[1]);
 document.querySelector('.save').innerHTML='Save';
+addElement("button",'volume',document.querySelectorAll('.buttons_block')[1]);
+document.querySelector('.volume').innerHTML='Sound';
 addElement("button",'load',document.querySelectorAll('.buttons_block')[1]);
 document.querySelector('.load').innerHTML='Load';
 addElement("div",'moves',document.querySelector('.options_block'));
@@ -418,6 +420,16 @@ window.addEventListener(`resize`, event => {
   function playSound() {
     document.querySelector('.sound').play();
   }
+  document.querySelector('.volume').addEventListener("click",function(){
+    if(document.querySelector('.sound').volume>0){
+      document.querySelector('.sound').volume=0;
+      document.querySelector('.volume').style.backgroundColor="#86c188";
+    } 
+    else {document.querySelector('.sound').volume=1;
+    document.querySelector('.volume').style.backgroundColor="#adeeafe8";
+  }
+  });
+
 
   document.querySelector('.results').addEventListener("click",function(){
     document.querySelector('.results_block').style.display='block';  
@@ -427,7 +439,7 @@ window.addEventListener(`resize`, event => {
     document.querySelector('.results_block').style.display='none';  
   });
 
-alert("Добрый день! Прошу проверить задание завтра немного не успел из-за работы. Спасибо! Discord: Farkhod#7886 для связи.");
+  alert("Добрый день! Прошу проверить задание завтра немного не успел из-за работы. Спасибо! Discord: Farkhod#7886 для связи.");
 
 
 
