@@ -4,6 +4,15 @@ a.className = elemclass;
 inelem.append(a);
 }
 addElement("div",'results_block',document.body);
+addElement("table",'results_list',document.querySelector('.results_block'));
+document.querySelector('.results_list').style.position='absolute';
+document.querySelector('.results_list').style.left='50%';
+document.querySelector('.results_list').style.top='30%';
+document.querySelector('.results_list').style.transform='translate(-50%, -50%)';
+document.querySelector('.results_list').style.fontSize='30px';
+addElement("tbody",'',document.querySelector('.results_list'));
+
+
 document.querySelector('.results_block').style.width='-webkit-fill-available';
 document.querySelector('.results_block').style.height='-webkit-fill-available';
 document.querySelector('.results_block').style.position='absolute';
@@ -72,7 +81,19 @@ let zeroindex=0;
 let w=0;
 let mobile=0;
 if (localStorage.getItem('top10') !== null) {
- top10=JSON.parse(localStorage.getItem("top10"));}
+ top10=JSON.parse(localStorage.getItem("top10"));
+ document.getElementsByTagName('tbody')[0].innerHTML+=`<tr><td>#</td><td>Moves</td><td>Time</td></tr>`;
+ for(let i=0;i<top10.length;i++){
+  document.getElementsByTagName('tbody')[0].innerHTML+=`<tr><td>${i+1}</td><td>${top10[i][0]}</td><td>${top10[i][1]}</td></tr>`;
+
+ }
+ 
+
+
+
+
+
+}
 else{
  top10=[];
 }

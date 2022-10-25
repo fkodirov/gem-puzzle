@@ -75,6 +75,17 @@
     align-items: center;
     width: 400px;
   }
+  tbody{
+    outline: 1px solid #000;
+    text-align: center;
+  }
+  tr:first{
+    outline: 1px solid #000;
+  }
+  td{
+    padding: 10px 15px 10px 15px;
+  }
+
   @media (max-width: 470px) {
     .buttons_block,.options_block,.sizes_block{
       width: 320px;
