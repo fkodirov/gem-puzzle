@@ -50,6 +50,12 @@ addElement("button",'three',document.querySelector('.sizes_block'));
 document.querySelector('.three').innerHTML='3x3';
 addElement("button",'four',document.querySelector('.sizes_block'));
 document.querySelector('.four').innerHTML='4x4';
+addElement("button",'five',document.querySelector('.sizes_block'));
+document.querySelector('.five').innerHTML='5x5';
+addElement("button",'six',document.querySelector('.sizes_block'));
+document.querySelector('.six').innerHTML='6x6';
+addElement("button",'seven',document.querySelector('.sizes_block'));
+document.querySelector('.seven').innerHTML='7x7';
 addElement("button",'eight',document.querySelector('.sizes_block'));
 document.querySelector('.eight').innerHTML='8x8';
 addElement("audio",'sound',document.querySelectorAll('.container')[2]);
@@ -110,6 +116,15 @@ function start(){
     else if(max==16){
       w=100;    
     }
+    else if(max==25){
+      w=80;    
+    }
+    else if(max==36){
+      w=66.7;    
+    }
+    else if(max==49){
+      w=57.2;    
+    }
     else if(max==64){
       w=50;    
     }}
@@ -122,6 +137,15 @@ function start(){
     }
     else if(max==16){
       w=75;    
+    }
+    else if(max==25){
+      w=60;    
+    }
+    else if(max==36){
+      w=50;    
+    }
+    else if(max==49){
+      w=42.9;    
     }
     else if(max==64){
       w=37.5;    
@@ -338,6 +362,36 @@ document.querySelector('.four').addEventListener("click",function(){
   starttime();
   move();
 });
+document.querySelector('.five').addEventListener("click",function(){
+  max=25;
+  document.querySelector(".puzzle_field").innerHTML='';
+  timer=0;moves=0;
+  document.querySelector('.moves').innerHTML=`Moves: ${moves++}`;
+  start();
+  markclose();
+  starttime();
+  move();
+});
+document.querySelector('.six').addEventListener("click",function(){
+  max=36;
+  document.querySelector(".puzzle_field").innerHTML='';
+  timer=0;moves=0;
+  document.querySelector('.moves').innerHTML=`Moves: ${moves++}`;
+  start();
+  markclose();
+  starttime();
+  move();
+});
+document.querySelector('.seven').addEventListener("click",function(){
+  max=49;
+  document.querySelector(".puzzle_field").innerHTML='';
+  timer=0;moves=0;
+  document.querySelector('.moves').innerHTML=`Moves: ${moves++}`;
+  start();
+  markclose();
+  starttime();
+  move();
+});
 document.querySelector('.eight').addEventListener("click",function(){
   max=64;
   document.querySelector(".puzzle_field").innerHTML='';
@@ -360,6 +414,15 @@ window.addEventListener(`resize`, event => {
     }
     else if(max==16){
       w=75;    
+    }
+    else if(max==25){
+      w=60;    
+    }
+    else if(max==36){
+      w=50;    
+    }
+    else if(max==49){
+      w=42.9;    
     }
     else if(max==64){
       w=37.5;    
@@ -384,6 +447,15 @@ window.addEventListener(`resize`, event => {
     }
     else if(max==16){
       w=100;    
+    }
+    else if(max==25){
+      w=80;    
+    }
+    else if(max==36){
+      w=66.7;    
+    }
+    else if(max==49){
+      w=57.2;    
     }
     else if(max==64){
       w=50;    
