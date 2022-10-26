@@ -7,8 +7,8 @@ addElement("div",'results_block',document.body);
 addElement("table",'results_list',document.querySelector('.results_block'));
 document.querySelector('.results_list').style.position='absolute';
 document.querySelector('.results_list').style.left='50%';
-document.querySelector('.results_list').style.top='30%';
-document.querySelector('.results_list').style.transform='translate(-50%, -50%)';
+document.querySelector('.results_list').style.top='5%';
+document.querySelector('.results_list').style.transform='translateX(-50%)';
 document.querySelector('.results_list').style.fontSize='30px';
 addElement("tbody",'',document.querySelector('.results_list'));
 
@@ -97,7 +97,7 @@ if (localStorage.getItem('top10') !== null) {
 else{
  top10=[];
 }
-console.log(top10);
+
 function start(){
   do{
     if(windowInnerWidth>470){
@@ -144,18 +144,20 @@ cell.innerHTML=n;
 cell.style.transition='all 0.15s ease-in-out';
 cell.style.left=`${l}px`;
 cell.style.top=`${t}px`;
+cell.setAttribute('draggable','false');
 if(n==0){
 zeroindex=i;
 cell.style.border='none';
 cell.style.color='rgb(233, 242, 233)';
-cell.style.zIndex='-1';}
-cell.setAttribute('draggable','true')
+cell.style.userSelect='none';
+}
 document.querySelector(".puzzle_field").append(cell);
 }
 checksolve();
 if(solvable==0)document.querySelector(".puzzle_field").innerHTML='';
   }while(solvable==0);
-}
+  
+  dragndrop();}
 
 
 //Время
@@ -180,14 +182,16 @@ function stoptime() {
 
 
 start();
-starttime();
-
-
-
 const cells=document.querySelectorAll(".cell");
 let empty=cells[arr.indexOf(0)];
 let getLeft=empty.style.left;
 let getTop=empty.style.top;
+markclose();
+starttime();
+
+
+
+
 
 
 function getNumber(str){
@@ -220,6 +224,7 @@ function move(){
         swap(arr,arr.indexOf(0),arr.indexOf(Number(cells[i].textContent)));
         playSound();
         win();
+        markclose();
       }
   });
 }
@@ -231,6 +236,7 @@ move();
   time.innerHTML='00:00';
   document.querySelector(".puzzle_field").innerHTML='';
   start();
+  markclose();
   starttime();
   move();
   moves=1;
@@ -318,6 +324,7 @@ document.querySelector('.three').addEventListener("click",function(){
   timer=0;moves=0;
   document.querySelector('.moves').innerHTML=`Moves: ${moves++}`;
   start();
+  markclose();
   starttime();
   move();
 });
@@ -327,6 +334,7 @@ document.querySelector('.four').addEventListener("click",function(){
   timer=0;moves=0;
   document.querySelector('.moves').innerHTML=`Moves: ${moves++}`;
   start();
+  markclose();
   starttime();
   move();
 });
@@ -336,6 +344,7 @@ document.querySelector('.eight').addEventListener("click",function(){
   timer=0;moves=0;
   document.querySelector('.moves').innerHTML=`Moves: ${moves++}`;
   start();
+  markclose();
   starttime();
   move();
 });
@@ -460,79 +469,10 @@ window.addEventListener(`resize`, event => {
     document.querySelector('.results_block').style.display='none';  
   });
 
-  alert("Добрый день! Прошу проверить задание завтра немного не успел из-за работы. Спасибо! Discord: Farkhod#7886 для связи.");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //Drag&drop
-document.addEventListener('DOMContentLoaded', (event) => {
+function dragndrop(){
 
   var dragSrcEl = null;
   
@@ -546,13 +486,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
   }
 
   function handleDragOver(e) {
+    if(e.target.innerHTML=='0'){
     if (e.preventDefault) {
       e.preventDefault();
     }
 
     e.dataTransfer.dropEffect = 'move';
     
-    return false;
+    return false;}
   }
 
   function handleDragEnter(e) {
@@ -565,20 +506,39 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
   function handleDrop(e) {
     if (e.stopPropagation) {
+      e.target.style.color='#000';
+      e.target.style.border='2px solid #000';
+      e.target.style.userSelect='';
+      e.target.setAttribute('draggable','true');
+      e.target.setAttribute('index','true');
       e.stopPropagation(); // stops the browser from redirecting.
     }
     
     if (dragSrcEl != this) {
       dragSrcEl.innerHTML = this.innerHTML;
       this.innerHTML = e.dataTransfer.getData('text/html');
+      swap(arr,arr.indexOf(0),arr.indexOf(Number(e.target.innerHTML)));
+      document.querySelector('.moves').innerHTML=`Moves: ${moves++}`;
+      playSound();
+      win();
     }
     
     return false;
   }
 
   function handleDragEnd(e) {
-    this.style.opacity = '1';
     
+    if(e.target.innerHTML=='0'){
+    this.style.transition='none';
+    this.style.color='#e9f2e9';
+    this.style.border='none';
+    this.style.userSelect='none';
+    this.setAttribute('draggable','false');
+    zeroindex=Array.from(document.querySelector('.puzzle_field').children).indexOf(this);
+    markclose();
+  }
+    this.style.opacity = '1';
+
     items.forEach(function (item) {
       item.classList.remove('over');
     });
@@ -594,4 +554,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
     item.addEventListener('drop', handleDrop, false);
     item.addEventListener('dragend', handleDragEnd, false);
   });
-});
+}
+function markclose(){
+  const cells=document.querySelectorAll(".cell");
+  for (let i = 0; i < cells.length; i++) {
+        
+        if((cells[zeroindex].style.left==cells[i].style.left && (getNumber(cells[zeroindex].style.top)==getNumber(cells[i].style.top)-w || getNumber(cells[zeroindex].style.top)==getNumber(cells[i].style.top)+w)) ||  (cells[zeroindex].style.top==cells[i].style.top && (getNumber(cells[zeroindex].style.left)==getNumber(cells[i].style.left)-w || getNumber(cells[zeroindex].style.left)==getNumber(cells[i].style.left)+w))){
+          cells[i].setAttribute('draggable','true');
+        }
+        else{
+          cells[i].setAttribute('draggable','false');
+        }
+  }
+}

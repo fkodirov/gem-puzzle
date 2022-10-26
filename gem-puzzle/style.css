@@ -43,6 +43,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    -webkit-user-select: none;
   }
   .buttons_block{
     display: flex;
