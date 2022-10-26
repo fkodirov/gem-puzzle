@@ -436,13 +436,14 @@ window.addEventListener(`resize`, event => {
       if(arr[i]==0){
       zeroindex=i;
       cell.style.border='none';
-      cell.style.color='rgb(233, 242, 233)';
-      cell.style.zIndex='-1';}
+      cell.style.color='rgb(233, 242, 233)';}
       cell.setAttribute('draggable','true')
       document.querySelector(".puzzle_field").append(cell);
       }
       move();
       starttime();
+      markclose();
+      dragndrop();
 
   });
 
